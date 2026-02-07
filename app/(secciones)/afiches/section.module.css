@@ -1,0 +1,23 @@
+.bentoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-auto-rows: 200px;
+  gap: 1.5rem;
+}
+
+.item[data-size="large"] {
+  grid-row: span 3;
+}
+
+.item[data-size="medium"] {
+  grid-row: span 2;
+}
+
+@media (max-width: 768px) {
+  .bentoGrid {
+    grid-auto-rows: 250px;
+  }
+  .item {
+    grid-row: span 1 !important;
+  }
+}
