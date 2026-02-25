@@ -51,7 +51,7 @@ Lo que vas a hacer es abrir otra, pero tenes qeu seleccionar git bash..
 
 <img width="1682" height="677" alt="Captura de pantalla 2026-02-24 193236" src="https://github.com/user-attachments/assets/ac433bc3-7747-4ee9-9122-f6fc69a10e55" />
 
-ahora... esto es muy importante, copias el comando que copias en donde te indique anteriormente que seria este https://github.com/Sebas-gatica-dev/porfolio-diseno.git, pero antes de copiar escribis git clone luego tan solo con apretar el boton derecho dle mouse deberia pegarte la url del repo y luego apretas espacio y escribir un punto, si no haces esto te va a crear una parte dentro(con el nombre dle repo porfolio-diseno), pero lo queremos es que clone el codigo dentro de la carpeta en la que estamos para hacer eso escribimos un punto al final...
+ahora... esto es muy importante, copias el comando que copias en donde te indique anteriormente que seria este https://github.com/Sebas-gatica-dev/porfolio-diseno.git, pero antes de copiar escribis git clone luego tan solo con apretar el boton derecho dle mouse deberia pegarte la url del repo y luego apretas espacio y escribir un punto, si no haces esto te va a crear una carpeta dentro(con el nombre dle repo porfolio-diseno), pero lo queremos es que clone el codigo dentro de la carpeta en la que estamos para hacer eso escribimos un punto al final...
 
 <img width="1908" height="1012" alt="image" src="https://github.com/user-attachments/assets/a8de3333-c8fa-4710-9f0c-0d3a68b7ff6d" />
 
