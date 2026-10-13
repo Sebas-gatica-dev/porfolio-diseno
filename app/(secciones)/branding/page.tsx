@@ -1,10 +1,17 @@
 import PortfolioSectionPage from "@/components/PortfolioSectionPage";
-import { portfolioSections } from "@/lib/site-data";
+import { getProjectsBySection, getSectionBySlug } from "@/lib/data";
 
-export default function BrandingPage() {
+export default async function BrandingPage() {
+  const section = await getSectionBySlug("branding");
+  const projects = section ? await getProjectsBySection(section) : [];
+
+  if (!section) {
+    return null;
+  }
+
   return (
     <div className="site-width">
-      <PortfolioSectionPage section={portfolioSections[2]} />
+      <PortfolioSectionPage section={section} projects={projects} />
     </div>
   );
 }

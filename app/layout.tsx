@@ -15,10 +15,8 @@ const spaceGrotesk = Space_Grotesk({
 
 export default function RootLayout({
   children,
-  modal,
 }: Readonly<{
   children: ReactNode;
-  modal: ReactNode;
 }>) {
   return (
     <html lang="es" suppressHydrationWarning>
@@ -41,7 +39,6 @@ export default function RootLayout({
             <Navbar />
             <main className="site-main">
               {children}
-              {modal}
             </main>
             <Footer />
           </ShellClient>

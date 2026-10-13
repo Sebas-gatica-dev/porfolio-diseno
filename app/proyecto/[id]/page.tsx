@@ -1,43 +1,44 @@
-"use client";
-import { useRouter } from 'next/navigation';
+import Image from "next/image";
+import { notFound } from "next/navigation";
 
-export default function ProyectoPage({ params }: { params: { id: string } }) {
-  const router = useRouter();
+import { getProjectById } from "@/lib/data";
+
+type ProyectoPageProps = {
+  params: Promise<{ id: string }>;
+};
+
+export default async function ProyectoPage({ params }: ProyectoPageProps) {
+  const { id } = await params;
+  const project = await getProjectById(id);
+
+  if (!project) {
+    notFound();
+  }
+
+  const media = project.cover ?? project.images[0]?.src;
 
   return (
-    <div className="max-w-5xl mx-auto py-20 px-6">
-      {/* BOTÓN: VOLVER A LA SECCIÓN */}
-      <button 
-        onClick={() => router.back()}
-        className="mb-10 flex items-center gap-2 group text-sm uppercase font-bold tracking-widest"
-      >
-        <span className="group-hover:-translate-x-2 transition-transform duration-300">←</span>
-        Volver a la galería
-      </button>
+    <div className="site-width project-page">
+      <header className="project-page__header">
+        <h1 className="project-page__title">{project.pageTitle ?? project.title}</h1>
 
-      <header className="mb-16">
-        <h1 className="text-7xl font-black uppercase italic tracking-tighter mb-4">
-          Proyecto {params.id}
-        </h1>
-        <div className="flex gap-10 text-sm uppercase text-gray-500 border-t border-b py-4">
-          <span>Categoría: Editorial</span>
-          <span>Año: 2024</span>
-          <span>Cliente: Nombre Cliente</span>
+        <div className="project-page__text">
+          <p>{project.pageText ?? project.overview}</p>
+          {project.pageNote ? <p>{project.pageNote}</p> : null}
         </div>
       </header>
 
-      {/* Aquí el contenido es mucho más extenso que en el modal */}
-      <section className="space-y-20">
-        <div className="bg-gray-100 w-full h-[70vh]" />
-        <div className="grid grid-cols-2 gap-10">
-          <div className="bg-gray-100 aspect-square" />
-          <div className="bg-gray-100 aspect-square" />
-        </div>
-        <p className="text-2xl leading-relaxed font-light text-gray-800 max-w-3xl">
-          Aquí es donde se explica todo el concepto de diseño, la tipografía elegida,
-          la paleta de colores y el desafío técnico resuelto.
-        </p>
-      </section>
+      <div className="project-page__media">
+        {media ? (
+          <Image
+            src={media}
+            alt={project.title}
+            fill
+            sizes="(max-width: 900px) 100vw, 1302px"
+            className="project-page__media-image"
+          />
+        ) : null}
+      </div>
     </div>
   );
 }

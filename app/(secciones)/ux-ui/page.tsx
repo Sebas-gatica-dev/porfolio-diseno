@@ -1,10 +1,17 @@
 import PortfolioSectionPage from "@/components/PortfolioSectionPage";
-import { portfolioSections } from "@/lib/site-data";
+import { getProjectsBySection, getSectionBySlug } from "@/lib/data";
 
-export default function UxUiPage() {
+export default async function UxUiPage() {
+  const section = await getSectionBySlug("ux-ui");
+  const projects = section ? await getProjectsBySection(section) : [];
+
+  if (!section) {
+    return null;
+  }
+
   return (
     <div className="site-width">
-      <PortfolioSectionPage section={portfolioSections[0]} />
+      <PortfolioSectionPage section={section} projects={projects} />
     </div>
   );
 }

@@ -3,11 +3,22 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { basePath } from "@/lib/base-path";
 import { BehanceIcon, LinkedInIcon } from "@/components/SocialIcons";
 
 export default function Footer() {
   const pathname = usePathname();
-  const isAboutPage = pathname === "/sobre-mi";
+  const pathnameWithoutBase =
+    basePath && (pathname === basePath || pathname.startsWith(`${basePath}/`))
+      ? pathname.slice(basePath.length) || "/"
+      : pathname;
+  const isAboutPage = pathnameWithoutBase === "/sobre-mi";
+  const isPrototypePage = pathnameWithoutBase.startsWith("/prototipo/");
+
+  // La vista de prototipo es full window: solo se muestra el navbar.
+  if (isPrototypePage) {
+    return null;
+  }
 
   return (
     <footer className={`site-footer${isAboutPage ? " site-footer--about" : ""}`}>

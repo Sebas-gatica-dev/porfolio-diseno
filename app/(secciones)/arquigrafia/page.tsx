@@ -1,10 +1,17 @@
 import PortfolioSectionPage from "@/components/PortfolioSectionPage";
-import { portfolioSections } from "@/lib/site-data";
+import { getProjectsBySection, getSectionBySlug } from "@/lib/data";
 
-export default function ArquigrafiaPage() {
+export default async function ArquigrafiaPage() {
+  const section = await getSectionBySlug("arquigrafia");
+  const projects = section ? await getProjectsBySection(section) : [];
+
+  if (!section) {
+    return null;
+  }
+
   return (
     <div className="site-width">
-      <PortfolioSectionPage section={portfolioSections[4]} />
+      <PortfolioSectionPage section={section} projects={projects} />
     </div>
   );
 }

@@ -1,10 +1,17 @@
 import PortfolioSectionPage from "@/components/PortfolioSectionPage";
-import { portfolioSections } from "@/lib/site-data";
+import { getProjectsBySection, getSectionBySlug } from "@/lib/data";
 
-export default function AfichesPage() {
+export default async function AfichesPage() {
+  const section = await getSectionBySlug("afiches");
+  const projects = section ? await getProjectsBySection(section) : [];
+
+  if (!section) {
+    return null;
+  }
+
   return (
     <div className="site-width">
-      <PortfolioSectionPage section={portfolioSections[3]} />
+      <PortfolioSectionPage section={section} projects={projects} />
     </div>
   );
 }

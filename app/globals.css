@@ -83,8 +83,9 @@ button {
   flex-direction: column;
 }
 
+/* Margen del Figma: 69px a cada lado en un frame de 1440px (contenido 1302px). */
 .site-width {
-  width: min(1240px, calc(100vw - 48px));
+  width: min(1302px, calc(100vw - 138px));
   margin: 0 auto;
 }
 
@@ -243,11 +244,6 @@ html[data-theme="dark"] .theme-icon--moon {
   backdrop-filter: none;
 }
 
-.site-header--about .site-width,
-.site-header--portfolio .site-width {
-  width: min(1300px, calc(100vw - 140px));
-}
-
 .site-header--about .site-header__inner {
   padding-top: 57px;
 }
@@ -375,26 +371,20 @@ html[data-theme="dark"] .theme-icon--moon {
 }
 
 .hero__content {
-  max-width: 720px;
+  max-width: 730px;
   padding-top: 24px;
 }
 
 .hero__title {
   margin: 0;
-  font-size: clamp(2.15rem, 6vw, 4rem);
-  line-height: 1.12;
-  font-weight: 600;
-  letter-spacing: -0.04em;
+  max-width: 16.5em;
+  color: var(--accent);
+  font-size: clamp(1.6rem, 2.9vw, 2.5rem);
+  line-height: 1.5;
+  font-weight: 400;
+  letter-spacing: 0;
 }
 
-.hero__pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  margin-top: 48px;
-}
-
-.pill-link,
 .contact-submit {
   display: inline-flex;
   align-items: center;
@@ -412,12 +402,6 @@ html[data-theme="dark"] .theme-icon--moon {
     transform 0.2s ease;
 }
 
-.pill-link {
-  min-width: 124px;
-  font-size: 0.92rem;
-}
-
-.pill-link:hover,
 .contact-submit:hover {
   background: var(--accent-hover);
   color: var(--accent);
@@ -470,38 +454,50 @@ html[data-theme="dark"] .theme-icon--moon {
   height: 24px;
 }
 
-.home-sections {
+.home-projects {
   display: grid;
-  gap: 34px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
   padding-top: 36px;
   padding-bottom: 80px;
 }
 
-.section-preview {
-  border: 1px solid var(--border);
+.project-card {
+  position: relative;
+  display: block;
   width: 100%;
-  min-height: 340px;
-  display: flex;
-  align-items: flex-end;
-  padding: 44px 52px;
-  text-align: left;
-  cursor: pointer;
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease;
+  aspect-ratio: 644 / 448;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--foreground) 8%, var(--background));
 }
 
-.section-preview:hover {
-  background: var(--surface-hover);
-  transform: translateY(-2px);
+.project-card__image {
+  object-fit: cover;
+  transition: opacity 0.25s ease;
 }
 
-.section-preview__title {
-  margin: 0;
-  font-size: clamp(2rem, 3.5vw, 3.25rem);
-  line-height: 1;
+.project-card__title {
+  position: absolute;
+  left: 36px;
+  right: 36px;
+  bottom: 34px;
+  font-size: 0.95rem;
   font-weight: 700;
-  letter-spacing: -0.04em;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--accent);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.project-card:hover .project-card__image,
+.project-card:focus-visible .project-card__image {
+  opacity: 0.12;
+}
+
+.project-card:hover .project-card__title,
+.project-card:focus-visible .project-card__title {
+  opacity: 1;
 }
 
 .portfolio-page,
@@ -543,10 +539,13 @@ html[data-theme="dark"] .theme-icon--moon {
 }
 
 .project-frame {
+  display: block;
   border: 1px solid var(--border);
   width: 100%;
   min-height: 440px;
   background: transparent;
+  color: inherit;
+  text-decoration: none;
   cursor: pointer;
   transition:
     background-color 0.2s ease,
@@ -560,6 +559,86 @@ html[data-theme="dark"] .theme-icon--moon {
   transform: translateY(-2px);
 }
 
+/* Página de proyecto (frames del Figma como 379:118): título azul, texto
+   angosto y caja de imagen a todo el ancho del contenido. */
+.project-page {
+  padding: 78px 0 96px;
+}
+
+.project-page__title {
+  margin: 0 0 14px;
+  color: var(--accent);
+  font-size: 1.6rem;
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.project-page__text {
+  max-width: 578px;
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.project-page__text p {
+  margin: 0;
+}
+
+.project-page__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1302 / 445;
+  margin-top: 34px;
+  border: 1px solid color-mix(in srgb, var(--foreground) 70%, transparent);
+  background: color-mix(in srgb, var(--foreground) 4%, var(--background));
+}
+
+.project-page__media-image {
+  object-fit: cover;
+}
+
+/* Vista de prototipo: el iframe ocupa la ventana completa bajo el navbar
+   (única vista sin márgenes de contenido). La altura exacta se mide en JS. */
+.prototype-view {
+  display: flex;
+  flex-direction: column;
+}
+
+.prototype-view__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 14px 0;
+  font-size: 0.82rem;
+}
+
+.prototype-view__back,
+.prototype-view__link {
+  color: var(--accent);
+  transition: opacity 0.2s ease;
+}
+
+.prototype-view__back {
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.prototype-view__back:hover,
+.prototype-view__link:hover {
+  opacity: 0.7;
+}
+
+.prototype-view__frame {
+  flex: 1;
+  width: 100%;
+  border: none;
+  background: color-mix(in srgb, var(--foreground) 4%, var(--background));
+}
+
 .info-page__hero {
   display: grid;
   gap: 10px;
@@ -567,10 +646,6 @@ html[data-theme="dark"] .theme-icon--moon {
 
 .info-page__hero p:last-child {
   font-weight: 700;
-}
-
-.about-page.site-width {
-  width: min(1300px, calc(100vw - 140px));
 }
 
 .about-page.info-page {
@@ -772,162 +847,6 @@ html[data-theme="dark"] .theme-icon--moon {
   height: 14px;
 }
 
-.project-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 70;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-}
-
-.project-modal__backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(24, 24, 24, 0.72);
-  backdrop-filter: blur(10px);
-}
-
-.project-modal__panel {
-  position: relative;
-  width: min(680px, 100%);
-  padding: 32px;
-  border: 1px solid color-mix(in srgb, var(--accent) 45%, white);
-  background: color-mix(in srgb, var(--background) 92%, white);
-  box-shadow: 0 24px 80px rgba(24, 24, 24, 0.18);
-}
-
-.project-modal__panel--scrollable {
-  width: min(960px, 100%);
-  max-height: min(88vh, 920px);
-  padding: 0;
-  overflow: hidden;
-}
-
-.project-modal__scroll {
-  max-height: min(88vh, 920px);
-  overflow-y: auto;
-  padding: 34px 34px 40px;
-}
-
-.project-modal__header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.project-modal__eyebrow {
-  display: inline-block;
-  margin-bottom: 12px;
-  color: var(--accent);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.project-modal__title {
-  margin: 0;
-  font-size: clamp(2rem, 5vw, 3rem);
-  line-height: 0.98;
-  font-weight: 800;
-  letter-spacing: -0.05em;
-  text-transform: lowercase;
-}
-
-.project-modal__close {
-  min-width: 74px;
-  padding: 10px 0;
-  border-bottom: 1px solid color-mix(in srgb, var(--foreground) 25%, white);
-  text-transform: uppercase;
-  font-size: 0.76rem;
-  letter-spacing: 0.12em;
-  cursor: pointer;
-}
-
-.project-modal__summary {
-  margin: 28px 0 0;
-  max-width: 52ch;
-  color: var(--muted);
-  font-size: 1.04rem;
-  line-height: 1.6;
-}
-
-.project-modal__actions {
-  margin-top: 28px;
-}
-
-.project-modal__intro {
-  margin-top: 24px;
-}
-
-.project-modal__meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 26px;
-  padding-top: 18px;
-  border-top: 1px solid color-mix(in srgb, var(--foreground) 18%, white);
-  color: var(--muted);
-  font-size: 0.82rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-}
-
-.project-modal__lead {
-  margin: 28px 0 0;
-  max-width: 24ch;
-  font-size: clamp(1.75rem, 4vw, 2.7rem);
-  line-height: 1.02;
-  font-weight: 700;
-  letter-spacing: -0.05em;
-}
-
-.project-modal__cover {
-  min-height: 340px;
-  position: relative;
-  overflow: hidden;
-  margin-top: 30px;
-  border: 1px solid color-mix(in srgb, var(--foreground) 20%, white);
-  background: var(--background);
-}
-
-.project-modal__cover-image {
-  object-fit: cover;
-}
-
-.project-modal__body {
-  display: grid;
-  gap: 18px;
-  margin-top: 26px;
-}
-
-.project-modal__content-block {
-  padding: 24px 0;
-  border-top: 1px solid color-mix(in srgb, var(--foreground) 14%, white);
-}
-
-.project-modal__content-block h3,
-.project-modal__content-block p {
-  margin: 0;
-}
-
-.project-modal__content-block h3 {
-  margin-bottom: 12px;
-  font-size: 1.02rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.project-modal__content-block p {
-  max-width: 68ch;
-  color: var(--muted);
-  font-size: 1.03rem;
-  line-height: 1.72;
-}
-
 .custom-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: color-mix(in srgb, var(--accent) 88%, white) transparent;
@@ -1069,10 +988,6 @@ html[data-theme="dark"] .skill-badge {
   padding-bottom: 56px;
 }
 
-.site-footer--about .site-width {
-  width: min(1300px, calc(100vw - 140px));
-}
-
 .site-footer__content {
   display: flex;
   align-items: center;
@@ -1130,23 +1045,44 @@ html[data-theme="dark"] .skill-badge {
     padding-top: 16px;
   }
 
-  .hero__pills {
-    margin-top: 32px;
-  }
-
   .hero__arrow {
     margin-top: 26px;
     padding: 30px 0 28px;
   }
 
-  .home-sections {
+  .home-projects {
+    grid-template-columns: 1fr;
+    gap: 12px;
     padding-top: 28px;
   }
 
-  .section-preview,
+  .project-card__title {
+    left: 22px;
+    right: 22px;
+    bottom: 22px;
+    font-size: 0.84rem;
+  }
+
   .project-frame {
     min-height: 280px;
     padding: 28px;
+  }
+
+  .project-page {
+    padding: 48px 0 72px;
+  }
+
+  .project-page__title {
+    font-size: 1.35rem;
+  }
+
+  .project-page__media {
+    aspect-ratio: 4 / 3;
+  }
+
+  .prototype-view__bar {
+    flex-wrap: wrap;
+    gap: 8px 16px;
   }
 
   .about-grid {
@@ -1154,32 +1090,9 @@ html[data-theme="dark"] .skill-badge {
     gap: 38px;
   }
 
-  .project-modal__panel {
-    padding: 26px;
-  }
-
-  .project-modal__panel--scrollable {
-    padding: 0;
-  }
-
-  .project-modal__scroll {
-    padding: 26px 22px 30px;
-  }
-
-  .project-modal__cover {
-    min-height: 240px;
-  }
-
   .scroll-top-button {
     right: 20px;
     bottom: 20px;
-  }
-
-  .site-header--about .site-width,
-  .site-header--portfolio .site-width,
-  .about-page.site-width,
-  .site-footer--about .site-width {
-    width: min(1300px, calc(100vw - 32px));
   }
 
   .site-header--about .site-nav,
@@ -1238,12 +1151,7 @@ html[data-theme="dark"] .skill-badge {
   }
 
   .hero__title {
-    max-width: 14ch;
-  }
-
-  .pill-link {
-    min-width: auto;
-    width: calc(50% - 7px);
+    max-width: none;
   }
 
   .site-footer__socials {
