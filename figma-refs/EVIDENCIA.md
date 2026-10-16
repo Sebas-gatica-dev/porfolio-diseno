@@ -122,6 +122,40 @@ Feedback del usuario: la app tenía márgenes incongruentes (navbar 70px vs cont
 
 El usuario pidió completar esta ronda ANTES de la Fase 3, y además señaló que la Fase 3 "deberá tener modificaciones y deberá ser reformulado" — no arrancar hasta que él lo indique.
 
+## Ronda 3 (2026-10-14): footer, sobre mí y contacto fieles al Figma
+
+Feedback: "debes asegurarte de respetar el diseño a la pie de la letra, verifica todos los detalles del Figma y debes corresponder cómo es realmente el footer, cómo es la página sobre mí y contacto realmente, ya que el diseño es diferente."
+
+Referencias usadas (renders ya descargadas): `figma-refs/ref-home.png`, `ref-sobre-mi.png`, `ref-contacto.png`.
+
+### Footer (frames Home 3:8, Sobre mi 109:337, Contacto 114:446)
+
+- **Figma**: en las 3 páginas el footer son SOLO los íconos Behance + LinkedIn alineados abajo a la derecha. Sin línea divisoria, sin texto de copyright.
+- **App antes**: `.site-footer__line` + "©2026 Sg.dev. Todos los derecho reservados" en home/contacto/secciones; en sobre-mi se ocultaban pero el chequeo `pathname === "/sobre-mi"` fallaba con trailing slash (mostraba línea + copyright igual).
+- **App ahora**: `Footer.tsx` simplificado — solo `.site-footer__socials` (flex-end). Se eliminaron `site-footer__line`, `site-footer--about`, `site-footer__content` y toda la lógica `isAboutPage`. Se mantiene el oculto en `/prototipo/`. Padding `.site-footer { padding: 44px 0 40px }`.
+
+### Sobre mí (frame 109:337)
+
+- Párrafos con **`<strong>`** donde el Figma tiene bold: "Soff", "Diseño y Comunicación Visual", y el último párrafo completo (además ya existía `.info-page__hero p:last-child { font-weight: 700 }`). Se renderizan con `dangerouslySetInnerHTML` (contenido estático de la semilla).
+- Texto corregido: "démosle forma junt**os**" (la app decía "juntas"; el Figma dice "juntos").
+- **Estructura de columnas**: "formación academica" ahora contiene SOLO la Licenciatura (UNLa). Los dos cursos de Coderhouse van en una sección **"cursos"** separada (`.about-subsection`, margin-top 66px) dentro de la misma columna izquierda — como en el Figma.
+- Orden de cursos = Figma: primero "Curso avanzado" (2025- 2026), después "Curso inicial" (2025- 2025).
+- Ambos cursos muestran **ícono ojo** (link al certificado), no texto "Certificado".
+- `EducationItem.meta` ahora es opcional y renderiza como `<em class="education-item__meta">` en gris 11px junto al detail (ej. "(duración de 2 meses y medio)"), como en el Figma.
+- Nuevas exports en `site-data.ts`: `courseItems`; `educationItems` = solo la licenciatura.
+
+### Contacto (frame 114:446)
+
+- **3 campos** como en el Figma (antes5): se quitaron "apellido" y "telefono" del form y del payload. La API `/api/contact` no se tocó (apellido/teléfono ya eran opcionales con `?? ""`).
+- Labels y placeholders con tildes: "dirección de correo electrónico" (antes sin tildes).
+- h1 "contacto" a **20px** azul bold (antes usaba el clamp grande; ahora `.contact-page .contact-page__hero h1` comparte el estilo de `.about-page .info-page__hero h1`).
+- Labels del form en **azul** (`var(--accent)`, 0.82rem) y borde de inputs/textarea en azul claro (`color-mix accent 55% white`), como en el Figma.
+- Botón "enviar" **centrado** bajo el form (`justify-self: center`; antes `start`). `margin-top` del form ajustado a17px.
+
+### Verificación
+
+- lint + tsc + `npm run build` OK (12/12 páginas). Screenshots comparativos vs `ref-sobre-mi.png` / `ref-contacto.png` / `ref-home.png`: footer, estructura de sobre-mi y form de contacto coinciden.
+
 ## Skill figma-design-to-code
 
 Instalada pero requiere TemPad Dev MCP (no disponible en este entorno) — usar directamente `get_figma_data` + `download_figma_images`.

@@ -366,39 +366,44 @@ export const homeIntro =
   "Hola, me llamo Sofia y transformo conceptos en realidades visuales";
 
 export const aboutParagraphs = [
-  "Hola, mi nombre es Sofia, aunque para todos soy Soff.",
-  "Mi camino en el mundo visual empezó con una cámara en la mano. Esa pasión por la fotografía y el arte fue la chispa que me llevó a estudiar Diseño y Comunicación Visual en la UNLa (Universidad Nacional de Lanus), donde hoy curso el tramo final de mi carrera.",
+  "Hola, mi nombre es Sofia, aunque para todos soy <strong>Soff</strong>.",
+  "Mi camino en el mundo visual empezó con una cámara en la mano. Esa pasión por la fotografía y el arte fue la chispa que me llevó a estudiar <strong>Diseño y Comunicación Visual</strong> en la UNLa (Universidad Nacional de Lanus), donde hoy curso el tramo final de mi carrera.",
   "Me considero una observadora por naturaleza: disfruto tanto de la historia del arte como de analizar la composición de una película o perderme en un buen disco de indie. Esa curiosidad es la que traslado a cada proyecto, buscando que el diseño no solo sea estético, sino que cuente una historia con valor agregado. Mi objetivo es seguir creciendo en ambientes desafiantes donde pueda aportar mi mirada y, sobre todo, seguir aprendiendo.",
-  "¿Tenés una idea en mente? ¡Hablemos y démosle forma juntas!",
+  "¿Tenés una idea en mente? ¡Hablemos y démosle forma juntos!",
 ];
 
 export type EducationItem = {
   title: string;
   institution: string;
   detail: string;
-  meta: string;
+  /** Texto aclaratorio en gris chico junto al detail (ej. "(duración de 3 meses)"). */
+  meta?: string;
   certificateUrl?: string;
 };
 
+/** Formación formal (Figma: sección "formación academica", solo la licenciatura). */
 export const educationItems: EducationItem[] = [
   {
     title: "Licenciatura en Diseño y Comunicación visual.",
     institution: "Universidad Nacional de Lanus (UNLa)",
     detail: "2019- en curso",
-    meta: "",
+  },
+];
+
+/** Cursos (Figma: sección "cursos" aparte, debajo de la formación). */
+export const courseItems: EducationItem[] = [
+  {
+    title: "Curso avanzado de diseño UX UI",
+    institution: "Coderhouse",
+    detail: "2025- 2026",
+    meta: "(duración de 2 meses y medio)",
+    certificateUrl: withBasePath("/certifications/pdf-prueba.pdf"),
   },
   {
     title: "Curso inicial de diseño UX UI",
     institution: "Coderhouse",
-    detail: "2025- 2025 (duración de 3 meses)",
-    meta: "Certificado",
-    certificateUrl: withBasePath("/certifications/pdf-prueba.pdf"),
-  },
-  {
-    title: "Curso avanzado de diseño UX UI",
-    institution: "Coderhouse",
-    detail: "2025- 2026 (duración de 2 meses y medio)",
-    meta: "Certificado",
+    detail: "2025- 2025",
+    meta: "(duración de 3 meses)",
     certificateUrl: withBasePath("/certifications/pdf-prueba.pdf"),
   },
 ];

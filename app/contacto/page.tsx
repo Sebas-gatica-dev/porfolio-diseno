@@ -18,9 +18,7 @@ export default function ContactPage() {
 
     const payload = {
       nombre: String(formData.get("nombre") ?? "").trim(),
-      apellido: String(formData.get("apellido") ?? "").trim(),
       email: String(formData.get("email") ?? "").trim(),
-      telefono: String(formData.get("telefono") ?? "").trim(),
       mensaje: String(formData.get("mensaje") ?? "").trim(),
       website: String(formData.get("website") ?? "").trim(),
     };
@@ -77,23 +75,13 @@ export default function ContactPage() {
         </div>
 
         <div className="contact-field">
-          <label htmlFor="apellido">apellido</label>
-          <input id="apellido" name="apellido" placeholder="su apellido..." />
-        </div>
-
-        <div className="contact-field">
-          <label htmlFor="email">direccion de correo electronico</label>
+          <label htmlFor="email">dirección de correo electrónico</label>
           <input
             id="email"
             name="email"
             type="email"
-            placeholder="su direccion de correo electronico..."
+            placeholder="su dirección de correo electrónico..."
           />
-        </div>
-
-        <div className="contact-field">
-          <label htmlFor="telefono">telefono</label>
-          <input id="telefono" name="telefono" placeholder="su telefono..." />
         </div>
 
         <div className="contact-field">

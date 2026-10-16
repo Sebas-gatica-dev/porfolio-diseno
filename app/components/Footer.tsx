@@ -12,30 +12,24 @@ export default function Footer() {
     basePath && (pathname === basePath || pathname.startsWith(`${basePath}/`))
       ? pathname.slice(basePath.length) || "/"
       : pathname;
-  const isAboutPage = pathnameWithoutBase === "/sobre-mi";
-  const isPrototypePage = pathnameWithoutBase.startsWith("/prototipo/");
 
   // La vista de prototipo es full window: solo se muestra el navbar.
-  if (isPrototypePage) {
+  if (pathnameWithoutBase.startsWith("/prototipo/")) {
     return null;
   }
 
+  // El Figma (home, sobre mí y contacto) muestra solo los íconos sociales
+  // alineados a la derecha: sin línea divisoria ni texto de copyright.
   return (
-    <footer className={`site-footer${isAboutPage ? " site-footer--about" : ""}`}>
+    <footer className="site-footer">
       <div className="site-width">
-        {isAboutPage ? null : <div className="site-footer__line" />}
-
-        <div className="site-footer__content">
-          {isAboutPage ? null : <p>©2026 Sg.dev. Todos los derecho reservados</p>}
-
-          <div className="site-footer__socials" aria-label="Redes sociales">
-            <Link href="https://www.behance.net/" target="_blank" rel="noreferrer">
-              <BehanceIcon />
-            </Link>
-            <Link href="https://www.linkedin.com/" target="_blank" rel="noreferrer">
-              <LinkedInIcon />
-            </Link>
-          </div>
+        <div className="site-footer__socials" aria-label="Redes sociales">
+          <Link href="https://www.behance.net/" target="_blank" rel="noreferrer">
+            <BehanceIcon />
+          </Link>
+          <Link href="https://www.linkedin.com/" target="_blank" rel="noreferrer">
+            <LinkedInIcon />
+          </Link>
         </div>
       </div>
     </footer>

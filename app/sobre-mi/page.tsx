@@ -1,5 +1,6 @@
 import { FigmaIcon, InDesignIcon, PhotoshopIcon, IllustratorIcon, AfterEffectsIcon } from "@/components/SocialIcons";
-import { aboutParagraphs, educationItems } from "@/lib/site-data";
+import { aboutParagraphs, courseItems, educationItems } from "@/lib/site-data";
+import type { EducationItem } from "@/lib/site-data";
 
 function EyeIcon() {
   return (
@@ -26,13 +27,37 @@ function EyeIcon() {
   );
 }
 
+function EducationArticle({ item }: { item: EducationItem }) {
+  return (
+    <article className="education-item">
+      <h3>{item.title}</h3>
+      <p>{item.institution}</p>
+      <span className="education-item__detail">
+        {item.detail}
+        {item.meta ? <em className="education-item__meta">{item.meta}</em> : null}
+      </span>
+      {item.certificateUrl ? (
+        <a
+          href={item.certificateUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="education-item__link education-item__link--icon"
+          aria-label="Ver certificado"
+        >
+          <EyeIcon />
+        </a>
+      ) : null}
+    </article>
+  );
+}
+
 export default function AboutPage() {
   return (
     <div className="site-width info-page about-page">
       <section className="info-page__hero">
         <h1>sobre mí</h1>
         {aboutParagraphs.map((paragraph) => (
-          <p key={paragraph}>{paragraph}</p>
+          <p key={paragraph} dangerouslySetInnerHTML={{ __html: paragraph }} />
         ))}
       </section>
 
@@ -41,27 +66,16 @@ export default function AboutPage() {
           <h2>formación academica</h2>
 
           <div className="education-list">
-            {educationItems.map((item, index) => (
-              <article key={item.title} className="education-item">
-                <h3>{item.title}</h3>
-                <p>{item.institution}</p>
-                <span>{item.detail}</span>
-                {item.certificateUrl ? (
-                  <a
-                    href={item.certificateUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={`education-item__link ${
-                      index === 1 ? "education-item__link--icon" : "education-item__link--text"
-                    }`}
-                    aria-label="Ver certificado"
-                  >
-                    {index === 1 ? <EyeIcon /> : item.meta || "Certificado"}
-                  </a>
-                ) : item.meta ? (
-                  <span>{item.meta}</span>
-                ) : null}
-              </article>
+            {educationItems.map((item) => (
+              <EducationArticle key={item.title} item={item} />
+            ))}
+          </div>
+
+          <h2 className="about-subsection">cursos</h2>
+
+          <div className="education-list">
+            {courseItems.map((item) => (
+              <EducationArticle key={item.title} item={item} />
             ))}
           </div>
         </div>
